@@ -56,8 +56,10 @@
     <Compile Include="Assets\_Game\Scripts\HealthBar.cs" />
     <Compile Include="Assets\_Game\Scripts\StateMachine\IState.cs" />
     <Compile Include="Assets\_Game\Scripts\StateMachine\PatrolState.cs" />
+    <Compile Include="Assets\_Game\Scripts\CombatText.cs" />
     <Compile Include="Assets\_Game\Scripts\StateMachine\AttackState.cs" />
     <Compile Include="Assets\_Game\Scripts\Character.cs" />
+    <Compile Include="Assets\_Game\Scripts\UIManager.cs" />
     <Compile Include="Assets\_Game\Scripts\StateMachine\IdleState.cs" />
     <Compile Include="Assets\_Game\Scripts\AttackArea.cs" />
     <Compile Include="Assets\_Game\Scripts\MovingPlatform.cs" />
@@ -67,8 +69,11 @@
     <Compile Include="Assets\_Game\Scripts\SavePoint.cs" />
     <Compile Include="Assets\_Game\Scripts\Enemy.cs" />
     <Compile Include="Assets\_Game\Scripts\EnemySight.cs" />
-    <Compile Include="Assets\_Game\Scripts\CombatText.cs" />
-    <Compile Include="Assets\_Game\Scripts\UIManager.cs" />
+    <Compile Include="Assets\_Game\Scripts\IceDrop.cs" />
+    <Compile Include="Assets\_Game\Scripts\Ice.cs" />
+    <Compile Include="Assets\_Game\Scripts\FireBall.cs" />
+    <Compile Include="Assets\_Game\Scripts\Healing.cs" />
+    <Compile Include="Assets\_Game\Scripts\Teleport.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

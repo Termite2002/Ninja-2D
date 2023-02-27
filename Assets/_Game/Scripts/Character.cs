@@ -8,7 +8,7 @@ public class Character : MonoBehaviour
     [SerializeField] protected HealthBar healthBar;
     [SerializeField] protected CombatText combatTextPrefab;
 
-    private float hp;
+    protected float hp;
     private string currentAnimName;
 
     public bool isDead => hp <= 0;
@@ -40,9 +40,18 @@ public class Character : MonoBehaviour
             anim.SetTrigger(currentAnimName);
         }
     }
-    public void OnHit(float damage)
+    public float getHp()
     {
-        Debug.Log("hit");
+        return hp;
+    }
+    public void setHp(float a)
+    {
+        hp = a;
+        healthBar.SetNewHp(hp);
+    }
+    public virtual void OnHit(float damage)
+    {
+        //Debug.Log("hit");
         if (!isDead)
         {
             hp -= damage;

@@ -12,8 +12,10 @@ public class Player : Character
     [SerializeField] private float jumpForce = 350;
 
     [SerializeField] private Kunai kunaiPrefab;
+    [SerializeField] private GameObject fireBallPrefab;
     [SerializeField] private Transform throwPoint;
     [SerializeField] private GameObject attackArea;
+    [SerializeField] private SpriteRenderer theSR;
 
 
     private bool isGrounded;
@@ -24,6 +26,8 @@ public class Player : Character
 
     private bool isAttack;
     private bool isDeath;
+
+    private float invinsibleCount;
 
     public float horizontal;
 
@@ -39,6 +43,15 @@ public class Player : Character
     void Update()
     {
         isGrounded = CheckGrounded();
+
+        if (invinsibleCount > 0)
+        {
+            invinsibleCount -= Time.deltaTime;
+            if (invinsibleCount <= 0)
+            {
+                theSR.color = new Color(theSR.color.r, theSR.color.g, theSR.color.b, 1f);
+            }
+        }
 
         if (isAttack)
         {
@@ -107,6 +120,16 @@ public class Player : Character
         {
             Throw();
         }
+        // Skill
+        if (Input.GetKeyDown(KeyCode.F) && isGrounded)
+        {
+            FireBall();
+        }
+        if (Input.GetKeyDown(KeyCode.E) && isGrounded)
+        {
+            invinsibleCount = 1.5f;
+            theSR.color = new Color(theSR.color.r, theSR.color.g, theSR.color.b, 0.5f);
+        }
     }
 
     public override void OnInit()
@@ -173,6 +196,14 @@ public class Player : Character
 
         Instantiate(kunaiPrefab, throwPoint.position, throwPoint.rotation);
     }
+    private void FireBall()
+    {
+        ChangeAnim("Throw");
+        isAttack = true;
+        Invoke(nameof(ResetAttack), 0.5f);
+
+        Instantiate(fireBallPrefab, throwPoint.position, throwPoint.rotation);
+    }
     private void ResetAttack()
     {
         isAttack = false;
@@ -216,6 +247,22 @@ public class Player : Character
     public void SetMove(float horizontal)
     {
         this.horizontal = horizontal;
+    }
+    public override void OnHit(float damage)
+    {
+        //Debug.Log("hit");
+        if (!isDead && invinsibleCount <= 0)
+        {
+            hp -= damage;
+            if (isDead)
+            {
+                hp = 0;
+                OnDeath();
+            }
+            healthBar.SetNewHp(hp);
+            Instantiate(combatTextPrefab, transform.position + Vector3.up, Quaternion.identity).OnInit(damage);
+        }
+
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
